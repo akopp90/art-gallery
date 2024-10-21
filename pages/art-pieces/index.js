@@ -1,5 +1,4 @@
 import ArtPieces from "@/components/ArtPieces";
-import NavigationBar from "@/components/NavigationBar";
 
 const ArtPcs = ({ pieces }) => {
   return (
