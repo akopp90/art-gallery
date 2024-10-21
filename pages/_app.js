@@ -17,7 +17,12 @@ export default function App({ Component, pageProps }) {
   };
 
   const { data, error, isLoading } = useSWR(url, fetcher);
-
+  const [artPiecesInfo, setArtPiecesInfo] = useState([
+    {
+      slug: "",
+      isBookmark: false,
+    },
+  ]);
   const [randomArtPiece, setRandomArtPiece] = useState(null);
 
   useEffect(() => {
@@ -35,11 +40,19 @@ export default function App({ Component, pageProps }) {
   if (isLoading) return <div>loading...</div>;
   console.log(data);
 
+  const handleArtPiecesInfo = (slug) => {};
+
   return (
     <>
       <GlobalStyle />
       <Layout>
-        <Component {...pageProps} artPiece={randomArtPiece} pieces={data} />
+        <Component
+          {...pageProps}
+          artPiece={randomArtPiece}
+          pieces={data}
+          /* artPiecesInfo={artPiecesInfo} */
+          handleArtPiecesInfo={handleArtPiecesInfo}
+        />
       </Layout>
     </>
   );
