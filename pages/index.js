@@ -1,45 +1,12 @@
-import useSWR from "swr";
 import ArtPieces from "../components/ArtPieces";
 import Spotlight from "@/components/Spotlight";
-import { useState, useEffect } from "react";
+import NavigationBar from "@/components/NavigationBar";
 
-export default function HomePage() {
-  const url = "https://example-apis.vercel.app/api/art";
-  const fetcher = async (url) => {
-    const res = await fetch(url);
-    if (!res.ok) {
-      const error = new Error("An error occurred while fetching the data.");
-      error.info = await res.json();
-      error.status = res.status;
-      throw error;
-    }
-    return res.json();
-  };
-
-  const { data, error, isLoading } = useSWR(url, fetcher);
-
-  // State für das zufällige Kunstwerk
-  const [randomArtPiece, setRandomArtPiece] = useState(null);
-
-  // Zufälliges Kunstwerk auswählen, sobald Daten geladen sind
-  useEffect(() => {
-    if (data && data.length > 0) {
-      const getRandomArtPiece = () => {
-        const randomIndex = Math.floor(Math.random() * data.length);
-        return data[randomIndex];
-      };
-
-      setRandomArtPiece(getRandomArtPiece());
-    }
-  }, [data]); // Diese Funktion wird nur ausgeführt, wenn 'data' sich ändert
-
-  if (error) return <div>failed to load</div>;
-  if (isLoading) return <div>loading...</div>;
-
+export default function HomePage({ artPiece }) {
   return (
     <>
-      {randomArtPiece && <Spotlight artPiece={randomArtPiece} />}
-      <ArtPieces pieces={data} />
+      {/* <NavigationBar /> */}
+      {artPiece && <Spotlight artPiece={artPiece} />}
     </>
   );
 }
