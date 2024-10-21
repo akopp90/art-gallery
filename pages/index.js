@@ -1,5 +1,5 @@
 import useSWR, { SWRConfig } from "swr";
-import ArtPieces from "./_components/ArtPieces";
+import ArtPieces from "../components/ArtPieces";
 
 export default function HomePage() {
   const url = "https://example-apis.vercel.app/api/art";
