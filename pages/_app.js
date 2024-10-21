@@ -1,7 +1,7 @@
 import GlobalStyle from "../styles";
 import { useState, useEffect } from "react";
 import useSWR from "swr";
-import Layout from "../public/layout";
+import Layout from "./layout";
 
 export default function App({ Component, pageProps }) {
   const url = "https://example-apis.vercel.app/api/art";
