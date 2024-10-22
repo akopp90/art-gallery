@@ -1,8 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import BookmarkButton from "./BookmarkButon";
 
-function ArtPiecePreview({ piece }) {
+function ArtPiecePreview({ piece, artPiecesInfo, onToggleFavorite }) {
+  const isFavorite =
+    artPiecesInfo && artPiecesInfo.length > 0
+      ? artPiecesInfo.find((info) => info.slug === piece.slug)?.isFavorite ||
+        false
+      : false;
+
   return (
     <>
       <div>ArtPiecePreview</div>
@@ -16,7 +23,10 @@ function ArtPiecePreview({ piece }) {
       </Link>
       {piece.name}
       {piece.artist}
-      <button /* isBookmark={isBookmark} */></button>
+      <BookmarkButton
+        isFavorite={isFavorite}
+        onToggleFavorite={() => onToggleFavorite(piece.slug)}
+      />
     </>
   );
 }

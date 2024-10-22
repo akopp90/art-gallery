@@ -1,8 +1,15 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
+import BookmarkButton from "./BookmarkButon";
 
-const ArtPieceDetails = ({ piece }) => {
+const ArtPieceDetails = ({ piece, artPiecesInfo, onToggleFavorite }) => {
   const router = useRouter();
+
+  const isFavorite =
+    artPiecesInfo && artPiecesInfo.length > 0
+      ? artPiecesInfo.find((info) => info.slug === piece.slug)?.isFavorite ||
+        false
+      : false;
 
   return (
     <>
@@ -25,6 +32,10 @@ const ArtPieceDetails = ({ piece }) => {
         <button type="button" onClick={() => router.push("/art-pieces")}>
           Back
         </button>
+        <BookmarkButton
+          isFavorite={isFavorite}
+          onToggleFavorite={onToggleFavorit} // Pass the slug
+        />
       </main>
     </>
   );

@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import ArtPiecePreview from "./ArtPiecePreview";
-function ArtPieces({ pieces }) {
+function ArtPieces({ pieces, artPiecesInfo, onToggleFavorite }) {
   return (
     <main>
       <h1>ArtPieces</h1>
@@ -10,7 +10,11 @@ function ArtPieces({ pieces }) {
         {pieces.map((piece) => (
           <>
             <li key={piece.slug}>
-              <ArtPiecePreview piece={piece} />
+              <ArtPiecePreview
+                piece={piece}
+                artPiecesInfo={artPiecesInfo}
+                onToggleFavorite={onToggleFavorite}
+              />
             </li>
           </>
         ))}

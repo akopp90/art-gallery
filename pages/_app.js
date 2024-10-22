@@ -17,30 +17,33 @@ export default function App({ Component, pageProps }) {
   };
 
   const { data, error, isLoading } = useSWR(url, fetcher);
-  const [artPiecesInfo, setArtPiecesInfo] = useState([
-    {
-      slug: "",
-      isBookmark: false,
-    },
-  ]);
-  const [randomArtPiece, setRandomArtPiece] = useState(null);
+  const [artPiecesInfo, setArtPiecesInfo] = useState([]);
 
   useEffect(() => {
-    if (data && data.length > 0) {
-      const getRandomArtPiece = () => {
-        const randomIndex = Math.floor(Math.random() * data.length);
-        return data[randomIndex];
-      };
-
-      setRandomArtPiece(getRandomArtPiece());
+    if (data) {
+      const initialInfo = data.map((piece) => ({
+        slug: piece.slug,
+        isFavorite: false,
+      }));
+      setArtPiecesInfo(initialInfo);
     }
   }, [data]);
 
   if (error) return <div>failed to load</div>;
   if (isLoading) return <div>loading...</div>;
-  console.log(data);
 
-  const handleArtPiecesInfo = (slug) => {};
+  // Function to handle toggle
+  const handleArtPiecesInfo = (slug) => {
+    setArtPiecesInfo((prevInfo) => {
+      const newInfo = prevInfo.map((piece) =>
+        piece.slug === slug
+          ? { ...piece, isFavorite: !piece.isFavorite }
+          : piece
+      );
+      console.log("Updated artPiecesInfo:", newInfo);
+      return newInfo;
+    });
+  };
 
   return (
     <>
@@ -48,10 +51,9 @@ export default function App({ Component, pageProps }) {
       <Layout>
         <Component
           {...pageProps}
-          artPiece={randomArtPiece}
           pieces={data}
-          /* artPiecesInfo={artPiecesInfo} */
-          handleArtPiecesInfo={handleArtPiecesInfo}
+          artPiecesInfo={artPiecesInfo}
+          onToggleFavorite={handleArtPiecesInfo} // Pass onToggleFavorite down
         />
       </Layout>
     </>
